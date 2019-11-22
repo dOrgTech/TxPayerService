@@ -1,4 +1,4 @@
-import { web3, provider } from "./core";
+import { web3 } from "./core";
 import { fromWei } from "./utils";
 
 export const getBalance = async account => {

@@ -2,9 +2,8 @@ import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import serverless from "serverless-http";
-import "app-module-path/register";
 
-import { routes } from "api/routes";
+import { routes } from "./api/routes";
 
 dotenv.config();
 
