@@ -26,4 +26,3 @@ const toUse = [
 toUse.forEach(object => appUse(object));
 
 export default app;
-module.exports.handler = serverless(app);
