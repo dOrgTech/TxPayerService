@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "babel-node src/server.js",
-    "build": "netlify-lambda build src",
+    "build": "netlify-lambda serve src --config ./src/webpack.functions.js",
     "dev:local": "LOCAL=true nodemon --exec babel-node src/server.js",
     "dev:rinkeby": "RINKEBY=true nodemon --exec babel-node src/server.js",
     "tests:unit": "mocha --require @babel/register 'tests/unit/**spec.js' --exit",
@@ -18,11 +18,13 @@
     "@truffle/hdwallet-provider": "^1.0.22",
     "app-module-path": "^2.2.0",
     "dotenv": "^8.0.0",
+    "electron": "^7.1.2",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
     "netlify-lambda": "^1.6.3",
+    "scrypt": "^6.0.3",
     "serverless-http": "^2.3.0",
-    "web3": "^1.2.2"
+    "web3": "1.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
@@ -32,6 +34,7 @@
     "chai": "^4.2.0",
     "husky": "^3.0.9",
     "mocha": "^6.2.2",
+    "node-loader": "^0.6.0",
     "nodemon": "^1.19.0",
     "prettier": "^1.18.2",
     "pretty-quick": "^2.0.0",

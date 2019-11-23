@@ -20,10 +20,10 @@ const toUse = [
   express.json(),
   morgan("combined"),
   requestHeaders,
-  ...routes,
+  ("/.netlify/functions", [...routes]),
   express.urlencoded({ extended: false })
 ];
 toUse.forEach(object => appUse(object));
 
-export default app;
 module.exports.handler = serverless(app);
+export default app;
