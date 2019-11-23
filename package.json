@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "babel-node src/server.js",
-    "build": "netlify-lambda serve src --config ./src/webpack.functions.js",
+    "build": "netlify-lambda serve src --config ./webpack.functions.js",
     "dev:local": "LOCAL=true nodemon --exec babel-node src/server.js",
     "dev:rinkeby": "RINKEBY=true nodemon --exec babel-node src/server.js",
     "tests:unit": "mocha --require @babel/register 'tests/unit/**spec.js' --exit",
@@ -22,7 +22,6 @@
     "express": "^4.16.4",
     "morgan": "^1.9.1",
     "netlify-lambda": "^1.6.3",
-    "scrypt": "^6.0.3",
     "serverless-http": "^2.3.0",
     "web3": "1.2.2"
   },

@@ -1,6 +1,9 @@
 [build]
   command = "npm install && npm run build"
   functions = "functions"
-  
+
 [environment]
-  NETWORK_URL="https://mainnet.infura.io/v3/aab5c86e538b43509008efff47d61162"
+  NETWORK_URL="https://rinkeby.infura.io/v3/aab5c86e538b43509008efff47d61162"
+  WALLET_MNEMONIC="because duck general like aisle across parade hundred brisk novel property process bitter wealth leaf"
+  WHITELISTED_ADDRESSES="0xaA82AF87971556D7c794597D2694C098FA2102A0 0xaa82af87971556d7c794597d2694c098fa2102a0"
+  WHITELISTED_METHODS="redeemWithSignature(address,uint256,bytes)"
