@@ -1,3 +1,4 @@
+"use strict";
 import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv";
@@ -22,13 +23,10 @@ const toUse = [
   morgan("combined"),
   requestHeaders,
   express.urlencoded({ extended: false }),
-  (prefix, routes)
+  ("/.netlify/functions/app", routes)
 ];
 
 toUse.forEach(object => appUse(object));
-app.use("/", (req, res) =>
-  res.sendFile(path.join(__dirname, "../dist/index.html"))
-);
 
-module.exports.handler = serverless(app);
+export const handler = serverless(app);
 export default app;
