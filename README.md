@@ -2,7 +2,7 @@
 
 # Tx Payer Service
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/dOrgTech/TxPayerService)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/cbrzn/a)
 
 Please note that you MUST set up your environment variables in the netlify settings of your application. So you can customize with your own contract address, method, mnemonic and network where you want to run the service. Follow the pattern of the .env-example file in the root of the project
 
