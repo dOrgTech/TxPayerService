@@ -6,10 +6,7 @@ module.exports = {
     path: path.resolve(__dirname, "build"),
     filename: "index.js"
   },
-  node: {
-    fs: "empty",
-    net: "empty"
-  },
+  target: "node",
   module: {
     rules: [
       {
@@ -20,11 +17,13 @@ module.exports = {
           presets: ["@babel/preset-env"],
           plugins: ["@babel/plugin-transform-runtime"]
         }
-      },
-      {
-        test: /\.node$/,
-        loader: "node-loader"
       }
     ]
+  },
+  resolve: {
+    alias: {
+      // replace native `scrypt` module with pure js `js-scrypt`
+      scrypt: "scrypt-js"
+    }
   }
 };
