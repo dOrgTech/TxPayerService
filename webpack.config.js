@@ -6,17 +6,20 @@ module.exports = {
     path: path.resolve(__dirname, "build"),
     filename: "index.js"
   },
-  target: "node",
+  node: {
+    fs: "empty",
+    net: "empty"
+  },
   module: {
     rules: [
       {
         test: /\.js$/,
         loader: "babel-loader",
+        exclude: path.resolve(__dirname, "node_modules"),
         options: {
           presets: ["@babel/preset-env"],
           plugins: ["@babel/plugin-transform-runtime"]
-        },
-        exclude: path.resolve(__dirname, "node_modules")
+        }
       },
       {
         test: /\.node$/,
