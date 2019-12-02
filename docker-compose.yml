@@ -14,6 +14,6 @@ services:
       - WALLET_MNEOMONIC=${WALLET_MNEMONIC}
     command: npm start
   ganache:
-    image: "daostack/migration:0.0.1-rc.30-v0"
+    image: daostack/migration:0.0.1-rc.30-v0
     ports:
-      - "8545:8545"
+      - 8545:8545
