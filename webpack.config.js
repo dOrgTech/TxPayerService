@@ -7,6 +7,10 @@ module.exports = {
     filename: "index.js"
   },
   target: "node",
+  optimization: {
+    // We no not want to minimize our code.
+    minimize: false
+  },
   module: {
     rules: [
       {
