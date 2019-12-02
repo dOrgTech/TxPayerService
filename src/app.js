@@ -17,16 +17,16 @@ const requestHeaders = (_, response, next) => {
 
 const appUse = (a, b) => (b ? app.use(a, b) : app.use(a));
 
-const prefix = process.env.SERVERLESS ? "/.netlify/functions/app" : "";
+const prefix = process.env.SERVERLESS ? "/.netlify/functions/index" : "";
 const toUse = [
   express.json(),
   morgan("combined"),
   requestHeaders,
   express.urlencoded({ extended: false }),
-  ("/.netlify/functions/app", routes)
+  (prefix, routes)
 ];
 
 toUse.forEach(object => appUse(object));
 
-export const handler = serverless(app);
+exports.handler = serverless(app);
 export default app;
