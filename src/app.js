@@ -17,13 +17,13 @@ const requestHeaders = (_, response, next) => {
 
 const appUse = (a, b) => (b ? app.use(a, b) : app.use(a));
 
-const prefix = process.env.SERVERLESS ? "/.netlify/functions/index" : "";
+// const prefix = process.env.SERVERLESS ? "/.netlify/functions/index" : "";
 const toUse = [
   express.json(),
   morgan("combined"),
   requestHeaders,
   express.urlencoded({ extended: false }),
-  (prefix, routes)
+  ("/.netlify/functions/index", routes)
 ];
 
 toUse.forEach(object => appUse(object));
