@@ -31,7 +31,7 @@ export const sender = async (request, response) => {
 
     const validAddress = addressRequested.includes(to);
     const validMethod = methodRequested.filter(method => {
-      return method.includes(methodAbi.name);
+      return method.startsWith(`${methodAbi.name}(`);
     });
 
     const regExp = /\(([^)]+)\)/;
