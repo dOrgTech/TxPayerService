@@ -53,7 +53,7 @@ const getPayerTest = async () => {
   };
 
   const response = await request(app)
-    .post(`/send-tx`)
+    .post(`/.netlify/functions/index/send-tx`)
     .send(parameters);
   console.log(response.body);
   expect(response.body.status).to.eq(200);

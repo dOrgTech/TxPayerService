@@ -51,7 +51,7 @@ describe("Integration send payment", () => {
     };
 
     const response = await request(app)
-      .post(`/send-tx`)
+      .post(`/.netlify/functions/index/send-tx`)
       .send(parameters);
     expect(response.body.status).to.eq(200);
   }, 5000);
