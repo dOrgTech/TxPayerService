@@ -3,6 +3,11 @@ import HDWalletProvider from "@truffle/hdwallet-provider";
 import dotenv from "dotenv";
 dotenv.config();
 
+/*
+ * For future HDWallet
+ */
+// import { genMnemonic } from "../setup/mnemonic";
+
 const { NETWORK_URL, WALLET_MNEMONIC, RINKEBY, LOCAL } = process.env;
 
 const NETWORK = RINKEBY
