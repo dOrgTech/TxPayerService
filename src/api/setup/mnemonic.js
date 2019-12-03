@@ -1,3 +1,3 @@
 import { generateMnemonic } from "bip39";
 
-export const generateMnemonic = () => generateMnemonic();
+export const genMnemonic = () => generateMnemonic();
