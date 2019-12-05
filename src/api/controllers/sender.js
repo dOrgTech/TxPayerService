@@ -38,16 +38,18 @@ export const sender = async (request, response) => {
      * There appears to be an issue with the following parameter checks
      */
 
-    // const regExp = /\(([^)]+)\)/;
-    // const methodInputsTypes = regExp.exec(WHITELISTED_METHODS);
+    const regExp = /\(([^)]+)\)/;
+    const methodInputsTypes = regExp.exec(WHITELISTED_METHODS);
 
     let correctParameters = true;
-    // const methodArguments = methodInputsTypes[1].split(",");
-    // methodArguments.forEach((inputType, index) => {
-    //   if (inputType !== methodAbi.inputs[index].type) {
-    //     correctParameters = false;
-    //   }
-    // });
+    const methodArguments = methodInputsTypes[1].split(",");
+    if (methodArguments) {
+      methodArguments.forEach((inputType, index) => {
+        if (inputType !== methodAbi.inputs[index].type) {
+          correctParameters = false;
+        }
+      });
+    }
 
     if (validAddress && validMethod.length > 0 && correctParameters) {
       try {
