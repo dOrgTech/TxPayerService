@@ -31,23 +31,18 @@ export const sender = async (request, response) => {
 
     const validAddress = addressRequested.includes(to);
     const validMethod = methodRequested.filter(method => {
-      return method.includes(methodAbi.name);
+      return method.startsWith(`${methodAbi.name}(`);
     });
 
-    /*
-     * There appears to be an issue with the following parameter checks
-     */
-
-    // const regExp = /\(([^)]+)\)/;
-    // const methodInputsTypes = regExp.exec(WHITELISTED_METHODS);
+    const regExp = /\(([^)]+)\)/;
+    const methodInputsTypes = regExp.exec(validMethod[0]);
 
     let correctParameters = true;
-    // const methodArguments = methodInputsTypes[1].split(",");
-    // methodArguments.forEach((inputType, index) => {
-    //   if (inputType !== methodAbi.inputs[index].type) {
-    //     correctParameters = false;
-    //   }
-    // });
+    methodInputsTypes &&
+      methodInputsTypes[1].split(",").forEach((inputType, index) => {
+        if (inputType !== methodAbi.inputs[index].type)
+          correctParameters = false;
+      });
 
     if (validAddress && validMethod.length > 0 && correctParameters) {
       try {
