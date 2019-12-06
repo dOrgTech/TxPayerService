@@ -34,22 +34,15 @@ export const sender = async (request, response) => {
       return method.startsWith(`${methodAbi.name}(`);
     });
 
-    /*
-     * There appears to be an issue with the following parameter checks
-     */
-
     const regExp = /\(([^)]+)\)/;
     const methodInputsTypes = regExp.exec(validMethod[0]);
 
     let correctParameters = true;
-    const methodArguments = methodInputsTypes[1].split(",");
-    if (methodArguments) {
-      methodArguments.forEach((inputType, index) => {
-        if (inputType !== methodAbi.inputs[index].type) {
+    methodInputsTypes &&
+      methodInputsTypes[1].split(",").forEach((inputType, index) => {
+        if (inputType !== methodAbi.inputs[index].type)
           correctParameters = false;
-        }
       });
-    }
 
     if (validAddress && validMethod.length > 0 && correctParameters) {
       try {
