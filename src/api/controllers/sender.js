@@ -39,7 +39,7 @@ export const sender = async (request, response) => {
      */
 
     const regExp = /\(([^)]+)\)/;
-    const methodInputsTypes = regExp.exec(WHITELISTED_METHODS);
+    const methodInputsTypes = regExp.exec(validMethod[0]);
 
     let correctParameters = true;
     const methodArguments = methodInputsTypes[1].split(",");
