@@ -94,10 +94,13 @@ export const checkAccountBalance = async (_, response, next) => {
   if (defaultAccountBalance > 0.001) {
     next();
   } else {
+    response.locals.balance = defaultAccountBalance;
+    response.locals.wallet = defaultAcc;
     response.send({
       status: 400,
-      message: `The service has run out of funds (It has less than 0.001 ether) - Please refill by doing a deposit to the wallet ${defaultAcc}`
+      message: `The service has run out of funds (It has less than 0.001 ether) - An email has been sent to refill the wallet ${defaultAcc}`
     });
+    next();
   }
 };
 
