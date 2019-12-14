@@ -91,14 +91,15 @@ export const checkWeb3Connection = async (_, response, next) => {
 export const checkAccountBalance = async (_, response, next) => {
   const defaultAcc = await getDefaultAccount();
   const defaultAccountBalance = fromWei(await web3.eth.getBalance(defaultAcc));
+  response.locals.balance = defaultAccountBalance;
+  response.locals.wallet = defaultAcc;
   if (defaultAccountBalance > 0.001) {
     next();
   } else {
-    response.locals.balance = defaultAccountBalance;
-    response.locals.wallet = defaultAcc;
+    response.locals.cancelled = true;
     response.send({
       status: 400,
-      message: `The service has run out of funds (It has less than 0.001 ether) - An email has been sent to refill the wallet ${defaultAcc}`
+      message: `The service has run out of funds (${defaultAcc} has less than 0.001 ether)`
     });
     next();
   }
