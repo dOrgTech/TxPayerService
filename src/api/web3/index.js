@@ -11,5 +11,6 @@ export {
   checkWeb3Connection,
   checkAccountBalance,
   tryContractMethod,
+  estimateTxGas,
   callContractMethod
 } from "./methods";
