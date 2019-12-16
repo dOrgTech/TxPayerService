@@ -66,6 +66,19 @@ export const sendContractMethod = (
 export const callContractMethod = (contractInstance, method, ...parameters) => {
   return new Promise(async (resolve, reject) => {
     try {
+      const response = await contractInstance.methods[method](
+        ...parameters
+      ).call({ from: await getDefaultAccount() });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export const estimateTxGas = (contractInstance, method, ...parameters) => {
+  return new Promise(async (resolve, reject) => {
+    try {
       const gasEstimation = await contractInstance.methods[method](
         ...parameters
       ).estimateGas({ from: await getDefaultAccount() });
@@ -112,7 +125,7 @@ export const tryContractMethod = async (request, response, next) => {
   contractInstance.options.address = to;
   let gas = 0;
   try {
-    const gasEstimate = await callContractMethod(
+    const gasEstimate = await estimateTxGas(
       contractInstance,
       methodAbi.name,
       ...parameters

@@ -28,7 +28,7 @@ const getPayerTest = async () => {
       address: ""
     }
   });
-  web3mock.expects("callContractMethod").returns("");
+  web3mock.expects("estimateTxGas").returns("");
   web3mock.expects("sendContractMethod").returns("");
   web3mock.expects("checkAccountBalance").returns("");
 
