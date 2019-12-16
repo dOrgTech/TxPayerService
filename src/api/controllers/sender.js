@@ -2,7 +2,8 @@ import {
   getTransactionNumber,
   getDefaultAccount,
   newContract,
-  sendContractMethod
+  sendContractMethod,
+  callContractMethod
 } from "../web3";
 
 const transactionHash = (hash, response) => {
@@ -10,6 +11,15 @@ const transactionHash = (hash, response) => {
   response.send({
     status: 200,
     message: "Transaction done",
+    hash
+  });
+};
+
+const callResult = (result, response) => {
+  console.log(`Call done. Response: ${result}`);
+  response.send({
+    status: 200,
+    message: "Call done",
     hash
   });
 };
@@ -57,13 +67,29 @@ export const sender = async (request, response) => {
 
         contractInstance.options.address = to;
 
-        const receipt = await sendContractMethod(
-          contractInstance,
-          methodAbi.name,
-          txObject,
-          ...parameters
-        );
-        transactionHash(receipt.transactionHash, response);
+        const mutability = methodAbi.stateMutability;
+        if (mutability) {
+          switch (mutability) {
+            case "pure":
+            case "view":
+              const result = await callContractMethod(
+                contractInstance,
+                methodAbi.name,
+                ...parameters
+              );
+              callResult(result, response);
+              break;
+            default:
+              const receipt = await sendContractMethod(
+                contractInstance,
+                methodAbi.name,
+                txObject,
+                ...parameters
+              );
+              transactionHash(receipt.transactionHash, response);
+              break;
+          }
+        }
       } catch (error) {
         onError(error, response);
       }
