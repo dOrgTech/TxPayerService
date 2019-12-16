@@ -15,6 +15,6 @@ const NETWORK = RINKEBY
 
 const mnemonic = NODE_ENV === "production" ? genMnemonic() : WALLET_MNEMONIC;
 
-// Instanciate Web3
+// Instantiate Web3
 export const provider = new HDWalletProvider(mnemonic, NETWORK, 0, 10);
 export const web3 = new Web3(provider);
