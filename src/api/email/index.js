@@ -1,27 +1,32 @@
 import nodemailer from "nodemailer";
+
 const {
   BALANCE_NOTIFICATIONS_EMAIL,
-  BALANCE_NOTIFICATION_THRESHOLD
+  BALANCE_NOTIFICATION_THRESHOLD,
+  EMAIL,
+  EMAIL_HOST,
+  EMAIL_PORT,
+  EMAIL_USER,
+  EMAIL_PASSWORD
 } = process.env;
 
 // Tested with personal gmail
 const transporter = nodemailer.createTransport({
-  pool: true,
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
+  // pool: true,
+  host: EMAIL_HOST,
+  port: EMAIL_PORT,
+  // secure: true,
   auth: {
-    user: "",
-    pass: ""
+    user: EMAIL_USER,
+    pass: EMAIL_PASSWORD
   }
 });
 
 const message = (balance, wallet, cancelled) => ({
-  from: "TxPayerService <DOrg Bot>",
-  to: `DOrg Funding<${BALANCE_NOTIFICATIONS_EMAIL}>`,
-  subject: `${cancelled ? "CRITICAL" : "LOW"} BALANCE ALERT - TX_PAYER_SERVICE`,
-  text: `Ethereum wallet: ${wallet}
-  Wallet balance: ${balance}`,
+  from: `TxPayerService <${EMAIL}>`,
+  to: `DOrg Funding <${BALANCE_NOTIFICATIONS_EMAIL}>`,
+  subject: `${cancelled ? "Critical" : "Low"} Balance Alert - TX_PAYER_SERVICE`,
+  text: `Ethereum wallet: ${wallet}\nWallet balance: ${balance}`,
   html: `<h2>Tx Payer Service</h2><p>Ethereum wallet: <a href=https://etherscan.io/address/${wallet}>${wallet}</a></p><p>Wallet balance: ${balance} ETH</p>`
 });
 
