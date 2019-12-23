@@ -20,7 +20,7 @@ const callResult = (result, response) => {
   response.send({
     status: 200,
     message: "Call done",
-    hash
+    result
   });
 };
 
