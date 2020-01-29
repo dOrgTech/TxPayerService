@@ -6,6 +6,7 @@ import {
   checkAccountBalance,
   tryContractMethod
 } from "../web3";
+import { handleFunds } from "../email";
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.post(
   "/send-tx",
   checkWeb3Connection,
   checkAccountBalance,
+  handleFunds,
   tryContractMethod,
   sender
 );
