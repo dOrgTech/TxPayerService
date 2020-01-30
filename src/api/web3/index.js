@@ -10,6 +10,6 @@ export {
   deployContract,
   checkWeb3Connection,
   checkAccountBalance,
-  tryContractMethod,
+  calculateGas,
   callContractMethod
 } from "./methods";

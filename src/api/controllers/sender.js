@@ -5,12 +5,13 @@ import {
   sendContractMethod
 } from "../web3";
 
-const transactionHash = (hash, response) => {
-  console.log(`Transaction done. Hash of transaction: ${hash}`);
+const transactionHash = (receipt, response) => {
+  console.log(`Transaction done. Receipt: ${receipt}`);
   response.send({
     status: 200,
     message: "Transaction done",
-    hash
+    receipt,
+    hash: receipt.transactionHash
   });
 };
 
@@ -22,7 +23,7 @@ const onError = (error, response) => {
 export const sender = async (request, response) => {
   try {
     const { to, methodAbi, parameters } = request.body;
-    const { gas, gasLimit } = request;
+    const { gas } = request;
     const { WHITELISTED_ADDRESSES, WHITELISTED_METHODS } = process.env;
     const defaultAccount = await getDefaultAccount();
 
@@ -50,8 +51,7 @@ export const sender = async (request, response) => {
         const txObject = {
           from: defaultAccount,
           nonce,
-          gas,
-          gasLimit
+          gas
         };
         const contractInstance = newContract([methodAbi], defaultAccount);
 
@@ -63,7 +63,7 @@ export const sender = async (request, response) => {
           txObject,
           ...parameters
         );
-        transactionHash(receipt.transactionHash, response);
+        transactionHash(receipt, response);
       } catch (error) {
         onError(error, response);
       }

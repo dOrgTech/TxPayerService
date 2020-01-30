@@ -105,28 +105,27 @@ export const checkAccountBalance = async (_, response, next) => {
   }
 };
 
-export const tryContractMethod = async (request, response, next) => {
+export const calculateGas = async (request, _, next) => {
   const defaultAccount = await getDefaultAccount();
   const { to, methodAbi, parameters } = request.body;
   const contractInstance = newContract([methodAbi], defaultAccount);
   contractInstance.options.address = to;
+  const { gasLimit } = await web3.eth.getBlock("latest");
   let gas = 0;
+
   try {
-    const gasEstimate = await callContractMethod(
+    gas = await callContractMethod(
       contractInstance,
       methodAbi.name,
       ...parameters
     );
-    gas = gasEstimate ? gasEstimate * 2 : 1000000;
-    request.gas = gas;
-    request.gasLimit = gas + 1000;
+    if (gas * 1.1 < gasLimit - 100000) {
+      gas *= 1.1;
+    }
   } catch (error) {
-    console.log(error);
-    // response.send({
-    //   status: 400,
-    //   message: `Transaction can not be done`,
-    //   error
-    // });
+    gas = gasLimit - 100000;
   }
+  request.gas = Math.round(gas);
+
   next();
 };
