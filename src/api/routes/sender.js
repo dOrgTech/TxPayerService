@@ -4,7 +4,7 @@ import { sender } from "../controllers";
 import {
   checkWeb3Connection,
   checkAccountBalance,
-  tryContractMethod
+  calculateGas
 } from "../web3";
 import { handleFunds } from "../email";
 
@@ -15,7 +15,7 @@ router.post(
   checkWeb3Connection,
   checkAccountBalance,
   handleFunds,
-  tryContractMethod,
+  calculateGas,
   sender
 );
 
