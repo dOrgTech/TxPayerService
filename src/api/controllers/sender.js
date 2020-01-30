@@ -6,7 +6,7 @@ import {
 } from "../web3";
 
 const transactionHash = (receipt, response) => {
-  console.log(`Transaction done. Receipt: ${receipt}`);
+  console.log(`Transaction done. Receipt: ${receipt.transactionHash}`);
   response.send({
     status: 200,
     message: "Transaction done",

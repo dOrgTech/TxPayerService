@@ -54,9 +54,7 @@ export const sendContractMethod = (
   return new Promise((resolve, reject) => {
     contactInstance.methods[method](...parameters)
       .send({ from, nonce, gas })
-      .on("confirmation", (_, receipt) => {
-        resolve(receipt);
-      })
+      .on("receipt", receipt => resolve(receipt))
       .on("error", error => {
         reject(error);
       });
