@@ -4,9 +4,9 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "node functions/index.js",
-    "build": "webpack && netlify-lambda build ./build",
-    "serv": "netlify-lambda serve ./build",
+    "start": "node src/index.js",
+    "build": "webpack",
+    "deploy": "npm run build && serverless deploy",
     "dev:local": "LOCAL=true nodemon --exec babel-node src/index.js",
     "dev:rinkeby": "RINKEBY=true nodemon --exec babel-node src/index.js",
     "test:unit": "mocha -r @babel/register -r @babel/polyfill 'tests/unit/**spec.js' --exit",
@@ -17,7 +17,6 @@
   "dependencies": {
     "@babel/runtime": "^7.7.4",
     "@truffle/hdwallet-provider": "^1.0.22",
-    "app-module-path": "^2.2.0",
     "bip39": "^3.0.2",
     "dotenv": "^8.0.0",
     "electron": "^7.1.2",
@@ -26,6 +25,7 @@
     "netlify-lambda": "^1.6.3",
     "nodemailer": "^6.4.2",
     "scrypt": "^6.0.3",
+    "serverless": "1.62.0",
     "serverless-http": "^2.3.0",
     "web3": "1.2.2"
   },
