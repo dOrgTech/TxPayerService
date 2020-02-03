@@ -22,6 +22,10 @@ functions:
           path: /
           method: ANY
           cors: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
 
 package:
   exclude:
