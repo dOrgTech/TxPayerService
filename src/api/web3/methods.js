@@ -52,12 +52,16 @@ export const sendContractMethod = (
 ) => {
   const { from, nonce, gas } = txObject;
   return new Promise((resolve, reject) => {
-    contactInstance.methods[method](...parameters)
-      .send({ from, nonce, gas })
-      .on("receipt", receipt => resolve(receipt))
-      .on("error", error => {
-        reject(error);
-      });
+    let result = contactInstance.methods[method](...parameters).send({
+      from,
+      nonce,
+      gas
+    });
+    result.on("receipt", async receipt => {
+      result = await result;
+      resolve({ result, receipt });
+    });
+    result.on("error", error => reject(error));
   });
 };
 
@@ -66,7 +70,9 @@ export const callContractMethod = (contractInstance, method, ...parameters) => {
     try {
       const gasEstimation = await contractInstance.methods[method](
         ...parameters
-      ).estimateGas({ from: await getDefaultAccount() });
+      ).estimateGas({
+        from: await getDefaultAccount()
+      });
       resolve(gasEstimation);
     } catch (error) {
       reject(error);

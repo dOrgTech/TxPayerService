@@ -2,11 +2,12 @@
 
 # Tx Payer Service
 
+<!--
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/dOrgTech/TxPayerService)
-
 Please note that you MUST set up your environment variables in the netlify settings of your application. So you can customize with your own contract address, method, mnemonic and network where you want to run the service. Follow the pattern of the .env-example file in the root of the project. After setting your environments variables - probably you will need to re deploy so the service updates itself.
 
 IMPORTANT: If you are going to use this as serverless functions, you MUST set up the `WALLET_MNEMONIC` environment variable, otherwise the service will auto generate an address :-)
+-->
 
 ### Installing
 
@@ -73,7 +74,7 @@ This is an example of how you should send the parameters:
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
-  }
+  },
   "parameters": [0x6ebe4210302C28804fF1136706E5166D0F8852f2, 10]
 }
 ```

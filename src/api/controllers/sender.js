@@ -5,12 +5,14 @@ import {
   sendContractMethod
 } from "../web3";
 
-const transactionHash = (receipt, response) => {
+const transactionHash = (tx, response) => {
+  const { receipt, result } = tx;
   console.log(`Transaction done. Receipt: ${receipt.transactionHash}`);
   response.send({
     status: 200,
     message: "Transaction done",
     receipt,
+    result,
     hash: receipt.transactionHash
   });
 };
@@ -57,13 +59,13 @@ export const sender = async (request, response) => {
 
         contractInstance.options.address = to;
 
-        const receipt = await sendContractMethod(
+        const tx = await sendContractMethod(
           contractInstance,
           methodAbi.name,
           txObject,
           ...parameters
         );
-        transactionHash(receipt, response);
+        transactionHash(tx, response);
       } catch (error) {
         onError(error, response);
       }
