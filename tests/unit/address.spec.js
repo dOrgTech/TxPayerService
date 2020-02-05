@@ -3,7 +3,7 @@ import request from "supertest";
 import sinon from "sinon";
 
 import app from "../../src/app";
-import * as web3 from "../../src/api/web3/methods";
+import * as web3 from "../../src/api/utils/web3/methods";
 
 let sandbox;
 beforeEach(function() {
@@ -20,7 +20,7 @@ const getAddressTest = async () => {
     .expects("getDefaultAccount")
     .returns("0xb45BbC8030D9B06D7CBaFA62DCfa126981Dd9E8e");
 
-  const response = await request(app).get("/.netlify/functions/index/address");
+  const response = await request(app).get("/address");
 
   expect(response.body.status).to.eq(200);
   expect(response.body.address).to.eq(

@@ -1,9 +1,8 @@
 import Web3 from "web3";
+import { generateMnemonic } from "bip39";
 import HDWalletProvider from "@truffle/hdwallet-provider";
 import dotenv from "dotenv";
 dotenv.config();
-
-import { genMnemonic } from "../setup/mnemonic";
 
 const { NETWORK_URL, WALLET_MNEMONIC, RINKEBY, LOCAL } = process.env;
 
@@ -13,7 +12,7 @@ const NETWORK = RINKEBY
   ? "http://127.0.0.1:8545"
   : NETWORK_URL;
 
-const mnemonic = WALLET_MNEMONIC ? WALLET_MNEMONIC : genMnemonic();
+const mnemonic = WALLET_MNEMONIC ? WALLET_MNEMONIC : generateMnemonic();
 
 // Instantiate Web3
 export const provider = new HDWalletProvider(mnemonic, NETWORK, 0, 10);

@@ -108,6 +108,6 @@ This is an example of how you should send the parameters:
 
 `/address`
 
-#### GET - Retrieve provider address balance
+##### GET - Retrieve provider address balance
 
 `/balance`

@@ -1,5 +1,4 @@
 import { web3 } from "./core";
-import { fromWei } from "./utils";
 
 export const getBalance = async account => {
   const balance = await web3.eth.getBalance(account);
@@ -18,7 +17,7 @@ export const getDefaultAccount = async () => {
 };
 
 export const toEther = amount => {
-  return fromWei(amount.toString(), "ether");
+  return web3.utils.fromWei(amount.toString(), "ether");
 };
 
 export const getTransactionNumber = async account => {
@@ -57,9 +56,9 @@ export const sendContractMethod = (
       nonce,
       gas
     });
-    result.on("receipt", async receipt => {
+    result.on("transactionHash", async hash => {
       result = await result;
-      resolve({ result, receipt });
+      resolve({ result, hash });
     });
     result.on("error", error => reject(error));
   });
@@ -94,7 +93,9 @@ export const checkWeb3Connection = async (_, response, next) => {
 
 export const checkAccountBalance = async (_, response, next) => {
   const defaultAcc = await getDefaultAccount();
-  const defaultAccountBalance = fromWei(await web3.eth.getBalance(defaultAcc));
+  const defaultAccountBalance = web3.utils.fromWei(
+    await web3.eth.getBalance(defaultAcc)
+  );
   response.locals.balance = defaultAccountBalance;
   response.locals.wallet = defaultAcc;
   if (defaultAccountBalance > 0.001) {

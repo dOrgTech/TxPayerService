@@ -5,8 +5,8 @@ import {
   checkWeb3Connection,
   checkAccountBalance,
   calculateGas
-} from "../web3";
-import { handleFunds } from "../email";
+} from "../utils/web3";
+import { handleFunds } from "../utils/mailer";
 
 const router = express.Router();
 

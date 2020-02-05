@@ -3,17 +3,16 @@ import {
   getDefaultAccount,
   newContract,
   sendContractMethod
-} from "../web3";
+} from "../utils/web3";
 
 const transactionHash = (tx, response) => {
-  const { receipt, result } = tx;
-  console.log(`Transaction done. Receipt: ${receipt.transactionHash}`);
+  const { result, hash } = tx;
+  console.log(`Transaction done. Receipt: ${hash}`);
   response.send({
     status: 200,
     message: "Transaction done",
-    receipt,
     result,
-    hash: receipt.transactionHash
+    hash
   });
 };
 

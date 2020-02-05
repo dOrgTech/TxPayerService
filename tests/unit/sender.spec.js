@@ -3,7 +3,7 @@ import request from "supertest";
 import sinon from "sinon";
 
 import app from "../../src/app";
-import * as web3 from "../../src/api/web3/methods";
+import * as web3 from "../../src/api/utils/web3/methods";
 
 let sandbox;
 beforeEach(function() {
@@ -29,7 +29,7 @@ const getPayerTest = async () => {
     }
   });
   web3mock.expects("callContractMethod").returns("");
-  web3mock.expects("sendContractMethod").returns({ result: "", receipt: "" });
+  web3mock.expects("sendContractMethod").returns({ result: "", hash: "" });
   web3mock.expects("checkAccountBalance").returns("");
 
   const parameters = {
@@ -53,7 +53,7 @@ const getPayerTest = async () => {
   };
 
   const response = await request(app)
-    .post(`/.netlify/functions/index/send-tx`)
+    .post(`/send-tx`)
     .send(parameters);
   expect(response.body.status).to.eq(200);
 };
