@@ -1,4 +1,4 @@
-import { getBalance, getDefaultAccount, toEther } from "../web3";
+import { getBalance, getDefaultAccount, toEther } from "../utils/web3";
 
 export const balance = async (_, response) => {
   try {

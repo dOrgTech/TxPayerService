@@ -1,7 +1,7 @@
 import express from "express";
 
 import { address } from "../controllers";
-import { checkWeb3Connection } from "../web3";
+import { checkWeb3Connection } from "../utils/web3";
 
 const router = express.Router();
 

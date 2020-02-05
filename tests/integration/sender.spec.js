@@ -6,7 +6,7 @@ import {
   getRandomAccount,
   deployContract,
   newContract
-} from "../../src/api/web3";
+} from "../../src/api/utils/web3";
 import { EXAMPLE_ABI, BYTE_CODE } from "../constants.data";
 
 describe("Integration send payment", () => {
@@ -51,7 +51,7 @@ describe("Integration send payment", () => {
     };
 
     const response = await request(app)
-      .post(`/.netlify/functions/index/send-tx`)
+      .post(`/send-tx`)
       .send(parameters);
     expect(response.body.status).to.eq(200);
   }, 5000);

@@ -1,0 +1,34 @@
+service: tx-payer
+
+custom:
+  secrets: ${file(secrets.json)} # reference the secrets.json file
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: production
+  region: eu-central-1
+  environment: # add environment property
+    NETWORK_URL: ${self:custom.secrets.NETWORK_URL}
+    WALLET_MNEMONIC: ${self:custom.secrets.WALLET_MNEMONIC}
+    WHITELISTED_ADDRESSES: ${self:custom.secrets.WHITELISTED_ADDRESSES}
+    WHITELISTED_METHODS: ${self:custom.secrets.WHITELISTED_METHODS}
+
+functions:
+  app:
+    handler: build/index.handler
+    events:
+      - http:
+          path: /
+          method: ANY
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: ANY
+          cors: true
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./build/index.js

@@ -30,7 +30,7 @@ const toUse = [
 ];
 
 toUse.forEach(object => appUse(object));
-app.use("/.netlify/functions/index", routes);
+app.use("/", routes);
 
 exports.handler = serverless(app);
 export default app;

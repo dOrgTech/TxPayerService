@@ -1,5 +1,4 @@
 import { web3 } from "./core";
-import { fromWei } from "./utils";
 
 export const getBalance = async account => {
   const balance = await web3.eth.getBalance(account);
@@ -18,7 +17,7 @@ export const getDefaultAccount = async () => {
 };
 
 export const toEther = amount => {
-  return fromWei(amount.toString(), "ether");
+  return web3.utils.fromWei(amount.toString(), "ether");
 };
 
 export const getTransactionNumber = async account => {
@@ -52,12 +51,16 @@ export const sendContractMethod = (
 ) => {
   const { from, nonce, gas } = txObject;
   return new Promise((resolve, reject) => {
-    contactInstance.methods[method](...parameters)
-      .send({ from, nonce, gas })
-      .on("receipt", receipt => resolve(receipt))
-      .on("error", error => {
-        reject(error);
-      });
+    let result = contactInstance.methods[method](...parameters).send({
+      from,
+      nonce,
+      gas
+    });
+    result.on("transactionHash", async hash => {
+      result = await result;
+      resolve({ result, hash });
+    });
+    result.on("error", error => reject(error));
   });
 };
 
@@ -66,7 +69,9 @@ export const callContractMethod = (contractInstance, method, ...parameters) => {
     try {
       const gasEstimation = await contractInstance.methods[method](
         ...parameters
-      ).estimateGas({ from: await getDefaultAccount() });
+      ).estimateGas({
+        from: await getDefaultAccount()
+      });
       resolve(gasEstimation);
     } catch (error) {
       reject(error);
@@ -88,7 +93,9 @@ export const checkWeb3Connection = async (_, response, next) => {
 
 export const checkAccountBalance = async (_, response, next) => {
   const defaultAcc = await getDefaultAccount();
-  const defaultAccountBalance = fromWei(await web3.eth.getBalance(defaultAcc));
+  const defaultAccountBalance = web3.utils.fromWei(
+    await web3.eth.getBalance(defaultAcc)
+  );
   response.locals.balance = defaultAccountBalance;
   response.locals.wallet = defaultAcc;
   if (defaultAccountBalance > 0.001) {
